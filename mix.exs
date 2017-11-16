@@ -5,13 +5,15 @@ defmodule Myserver.Mixfile do
   @version "0.1.0"
 
   @deps [
-    # { :earmark, ">0.1.5" },                      
-    # { :ex_doc,  "1.2.3", only: [ :dev, :test ] }
-    # { :my_app:  path: "../my_app" },
+    {:ex_doc, ">= 0.0.0", only: [:dev] },
+    {:mix_test_watch, "~> 0.5", only: [:test]},
+    {:cowboy, "~> 1.1"},
+    {:poison, "~> 3.1"},
+    {:plug, "~> 1.4"},
   ]
-  
+
   # ------------------------------------------------------------
-  
+
   def project do
     in_production = Mix.env == :prod
     [
@@ -25,9 +27,10 @@ defmodule Myserver.Mixfile do
 
   def application do
     [
-      extra_applications: [         # built-in apps that need starting    
-        :logger
-      ], 
+      mod: {Myserver, []},
+      extra_applications: [
+        :logger,
+      ]
     ]
   end
 
