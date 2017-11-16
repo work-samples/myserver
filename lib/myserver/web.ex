@@ -20,7 +20,11 @@ defmodule Myserver.Web do
   end
 
   get "/" do
-    send(conn, 200, %{version: Myserver.version})
+    send(conn, 200, return_data(Myserver.version, conn.query_params["user"]))
+  end
+
+  post "/" do
+    send(conn, 201, return_data(conn.body_params["version"], conn.query_params["user"]))
   end
 
   match "*glob" do
@@ -33,6 +37,9 @@ defmodule Myserver.Web do
        }
     )
   end
+
+  defp return_data(version, nil), do: %{version: version}
+  defp return_data(version, user), do: %{version: version, user: user}
 
   defp send(conn, status_code, raw_body) do
     conn
