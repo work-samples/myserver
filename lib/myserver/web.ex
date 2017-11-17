@@ -27,6 +27,14 @@ defmodule Myserver.Web do
     send(conn, 201, return_data(conn.body_params["version"], conn.query_params["user"]))
   end
 
+  get "/profile" do
+    case get_req_header(conn, "authorization") do
+      ["Bearer abc123"] -> send(conn, 200, %{answer: 42})
+      ["Bearer def456"] -> send(conn, 403, %{error: "Forbidden", reason: "No access to this resource"})
+      _ -> send(conn, 401, %{error: "Unauthorized", reason: "Invalid credentials"})
+    end
+  end
+
   match "*glob" do
     send(
       conn,
