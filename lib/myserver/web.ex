@@ -35,6 +35,14 @@ defmodule Myserver.Web do
     end
   end
 
+  post "/oauth2/token" do
+    case conn.body_params["grant_type"] do
+      "refresh_token" -> refresh_token(conn)
+      "authorization_code" -> authorization_code(conn)
+      _ -> send(conn, 404, %{error: "unknown_token", data: conn.body_params})
+    end
+  end
+
   match "*glob" do
     send(
       conn,
@@ -53,6 +61,27 @@ defmodule Myserver.Web do
     conn
     |> put_resp_content_type("application/json")
     |> send_resp(status_code, Poison.encode!(raw_body))
+  end
+
+  def refresh_token(conn) do
+    case conn.body_params["refresh_token"] do
+      "good1234" -> send(conn, 200, good_token())
+      _ -> send(conn, 404, %{error: "unknown_refresh", data: conn.body_params})
+    end
+  end
+
+  def authorization_code(conn) do
+    case conn.body_params["code"] do
+      "code1234" -> send(conn, 200, good_token())
+      _ -> send(conn, 404, %{error: "unknown_code", data: conn.body_params})
+    end
+  end
+
+  def good_token() do
+    %{"access_token" => "access1234",
+      "expires_in" => 1800,
+      "refresh_token" => "good1234",
+      "token_type" => "Bearer"}
   end
 
 end
