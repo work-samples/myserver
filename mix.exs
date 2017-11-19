@@ -4,7 +4,7 @@ defmodule Myserver.Mixfile do
   @app    :myserver
   @git_url "https://github.com/work-samples/myserver"
   @home_url @git_url
-  @version "0.0.2"
+  @version "0.0.3"
 
   @deps [
     {:ex_doc, ">= 0.0.0", only: [:dev] },
