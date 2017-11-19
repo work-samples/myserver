@@ -2,7 +2,7 @@ defmodule Myserver.Mixfile do
   use Mix.Project
 
   @app    :myserver
-  @git_url "https://github.com/aforward-oss/myserver"
+  @git_url "https://github.com/work-samples/myserver"
   @home_url @git_url
   @version "0.0.2"
 
