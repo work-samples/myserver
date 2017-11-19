@@ -1,8 +1,10 @@
 defmodule Myserver.Mixfile do
   use Mix.Project
 
-  @name    :myserver
-  @version "0.1.0"
+  @app    :myserver
+  @git_url "https://github.com/aforward-oss/myserver"
+  @home_url @git_url
+  @version "0.0.1"
 
   @deps [
     {:ex_doc, ">= 0.0.0", only: [:dev] },
@@ -10,6 +12,15 @@ defmodule Myserver.Mixfile do
     {:cowboy, "~> 1.1"},
     {:poison, "~> 3.1"},
     {:plug, "~> 1.4"},
+    {:version_tasks, "~> 0.10"},
+  ]
+
+  @package [
+    name: @app,
+    files: ["lib", "mix.exs", "README*", "README*", "LICENSE*"],
+    maintainers: ["Andrew Forward"],
+    licenses: ["MIT"],
+    links: %{"GitHub" => @git_url}
   ]
 
   # ------------------------------------------------------------
@@ -17,11 +28,19 @@ defmodule Myserver.Mixfile do
   def project do
     in_production = Mix.env == :prod
     [
-      app:     @name,
+      app:     @app,
       version: @version,
       elixir:  ">= 1.5.2",
-      deps:    @deps,
+      name: "Myserver",
+      description: "A sample server for testing RESTful API clients through HTTP",
+      package: @package,
+      source_url: @git_url,
+      homepage_url: @home_url,
+      docs: [main: "Myserver",
+             extras: ["README.md"]],
       build_embedded:  in_production,
+      start_permanent:  in_production,
+      deps:    @deps,
     ]
   end
 
