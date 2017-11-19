@@ -4,7 +4,7 @@ defmodule Myserver.Mixfile do
   @app    :myserver
   @git_url "https://github.com/aforward-oss/myserver"
   @home_url @git_url
-  @version "0.0.1"
+  @version "0.0.2"
 
   @deps [
     {:ex_doc, ">= 0.0.0", only: [:dev] },
